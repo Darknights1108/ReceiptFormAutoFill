@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receipt Form Auto-Fill</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">AI Intern Assessment</p>
+        <h1>Receipt Form Auto-Fill</h1>
+      </div>
+      <div class="model-pill" id="modelPill">AI vision extraction</div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel upload-panel" aria-labelledby="upload-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Receipt</p>
+            <h2 id="upload-title">Image Upload</h2>
+          </div>
+          <button class="ghost-button" id="clearButton" type="button">Clear</button>
+        </div>
+
+        <label class="dropzone" id="dropzone" for="receiptInput">
+          <input id="receiptInput" type="file" accept="image/png,image/jpeg,image/webp" />
+          <span class="receipt-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <strong id="dropzoneTitle">Choose a receipt image</strong>
+          <small>PNG, JPG, or WEBP</small>
+        </label>
+
+        <figure class="preview-frame is-empty" id="previewFrame">
+          <img id="receiptPreview" alt="Selected receipt preview" />
+          <figcaption id="fileMeta">No receipt selected</figcaption>
+        </figure>
+
+        <div class="action-row">
+          <button class="primary-button" id="extractButton" type="button" disabled>Extract Fields</button>
+          <div class="status" id="statusText" role="status">Ready</div>
+        </div>
+      </section>
+
+      <section class="panel form-panel" aria-labelledby="form-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Review</p>
+            <h2 id="form-title">Expense Form</h2>
+          </div>
+          <span class="save-state" id="saveState">Unsaved</span>
+        </div>
+
+        <form id="receiptForm">
+          <label>
+            <span>Merchant Name</span>
+            <input id="merchantName" name="merchantName" autocomplete="organization" placeholder="Merchant" />
+          </label>
+
+          <label>
+            <span>Date</span>
+            <input id="date" name="date" type="date" />
+          </label>
+
+          <div class="field-grid">
+            <label>
+              <span>Total Amount</span>
+              <input id="totalAmount" name="totalAmount" inputmode="decimal" placeholder="0.00" />
+            </label>
+
+            <label>
+              <span>Currency</span>
+              <input id="currency" name="currency" maxlength="8" placeholder="USD" />
+            </label>
+          </div>
+
+          <label>
+            <span>Notes</span>
+            <textarea id="notes" name="notes" rows="3" placeholder="Review notes"></textarea>
+          </label>
+
+          <div class="confidence-grid" aria-label="Extraction confidence">
+            <div>
+              <span>Merchant</span>
+              <strong id="merchantConfidence">--</strong>
+            </div>
+            <div>
+              <span>Date</span>
+              <strong id="dateConfidence">--</strong>
+            </div>
+            <div>
+              <span>Total</span>
+              <strong id="totalConfidence">--</strong>
+            </div>
+            <div>
+              <span>Currency</span>
+              <strong id="currencyConfidence">--</strong>
+            </div>
+          </div>
+
+          <button class="primary-button submit-button" type="submit">Submit Reviewed Data</button>
+        </form>
+      </section>
+    </main>
+
+    <section class="submissions" aria-labelledby="submissions-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Local Storage</p>
+          <h2 id="submissions-title">Submitted Receipts</h2>
+        </div>
+        <button class="ghost-button" id="clearSubmissionsButton" type="button">Clear List</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Merchant</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Currency</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+          <tbody id="submissionsBody">
+            <tr>
+              <td colspan="5">No submissions yet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
